@@ -1,48 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import Square from './Components/Square'
+import { Grid, Typography } from '@material-ui/core';
+import Board from './Components/Board';
 
-function Square(props) {
-  const className = 'square' + (props.highlight ? ' highlight' : '');
-  return (
-    <button
-      className={className}
-      onClick={props.onClick}>
-      {props.value}
-    </button>
-  );
-}
-
-class Board extends React.Component {
-  renderSquare(i) {
-    const winLine = this.props.winLine;
-    return (
-      <Square
-        key={i}
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-        highlight={winLine && winLine.includes(i)}
-      />
-    );
-  }
-
-  render() {
-    // Use two loops to make the squares
-    const boardSize = 3;
-    let squares = [];
-    for (let i = 0; i < boardSize; ++i) {
-      let row = [];
-      for (let j = 0; j < boardSize; ++j) {
-        row.push(this.renderSquare(i * boardSize + j));
-      }
-      squares.push(<div key={i} className="board-row">{row}</div>);
-    }
-
-    return (
-      <div>{squares}</div>
-    );
-  }
-}
 
 class Game extends React.Component {
   constructor(props) {
@@ -135,22 +97,39 @@ class Game extends React.Component {
     }
 
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board
-            squares={current.squares}
-            onClick={i => this.handleClick(i)}
-            winLine={winInfo.line}
-          />
-        </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <button onClick={() => this.handleSortToggle()}>
-            {isAscending ? 'descending' : 'ascending'}
-          </button>
-          <ol>{moves}</ol>
-        </div>
-      </div>
+    <React.Fragment>
+      <Grid container>
+        <Grid item xs={12}>
+          <div className="game">
+          <div className="game-board">
+            <Grid container>
+              <Board
+                squares={current.squares}
+                onClick={i => this.handleClick(i)}
+                winLine={winInfo.line}
+              />
+            </Grid>
+          </div>
+          </div>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+
+          {status}
+          </Typography>
+        </Grid>
+      </Grid>
+    </React.Fragment>
+      //   {/* <div className="game-info">
+      //     <div>{status}</div>
+      //     <button onClick={() => this.handleSortToggle()}>
+      //       {isAscending ? 'descending' : 'ascending'}
+      //     </button>
+      //     <ol>{moves}</ol>
+      //   </div> */}
+      // </div>
     );
   }
 }
