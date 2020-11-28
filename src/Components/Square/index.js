@@ -7,8 +7,8 @@ import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     squareBox: {
-        width: "50px",
-        height: "50px",
+        width: "80px",
+        height: "80px",
         margin: "15px"
     }
 }))
